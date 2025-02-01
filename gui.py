@@ -11,9 +11,11 @@ from PIL import Image, ImageTk
 input_video = None
 output_video = None
 progress_value = 0  # Used to track progress
+original_width = None
+original_height = None
 
 # Function to compress video
-def compress_video(threshold):
+def compress_video(threshold, resolution):
     global progress_value
 
     if not input_video or not output_video:
@@ -28,11 +30,32 @@ def compress_video(threshold):
         cap.release()
         return
 
-    # Open FFmpeg process
+    # Get selected resolution
+    if resolution == "Custom":
+        try:
+            custom_width = int(custom_width_entry.get())
+            custom_height = int(custom_height_entry.get())
+            if custom_width > original_width or custom_height > original_height:
+                messagebox.showerror("Error", "Custom resolution cannot exceed the original video resolution.")
+                return
+            resolution = f"{custom_width}x{custom_height}"
+        except ValueError:
+            messagebox.showerror("Error", "Please enter valid numeric values for custom resolution.")
+            return
+    else:
+        # Map preset resolutions to WIDTHxHEIGHT format
+        resolution_map = {
+            "720p": "1280x720",
+            "480p": "854x480",
+            "360p": "640x360",
+        }
+        resolution = resolution_map.get(resolution, resolution)
+
+    # Open FFmpeg process with selected resolution
     process = (
         ffmpeg
         .input(input_video)
-        .output(output_video, vcodec="libx264", crf=28, preset="slow", acodec="aac", audio_bitrate="128k")
+        .output(output_video, vcodec="libx264", crf=28, preset="slow", acodec="aac", audio_bitrate="128k", s=resolution)
         .overwrite_output()
         .run_async(pipe_stdin=True)
     )
@@ -90,19 +113,26 @@ def start_compression():
         messagebox.showerror("Error", "Please enter a valid numeric threshold.")
         return
 
+    resolution = resolution_var.get()
     status_label.config(text="Compressing...")
     progress_bar["value"] = 0  # Reset progress bar
 
     # Run compression in a separate thread to keep UI responsive
-    compression_thread = Thread(target=compress_video, args=(threshold,))
+    compression_thread = Thread(target=compress_video, args=(threshold, resolution))
     compression_thread.start()
 
 # Function to select input video
 def select_input_video():
-    global input_video
+    global input_video, original_width, original_height
     input_video = filedialog.askopenfilename(title="Select Input Video", filetypes=[("Video Files", "*.mp4 *.avi *.mov")])
     if input_video:
         input_label.config(text=f"Input: {os.path.basename(input_video)}")
+        # Get original video resolution
+        cap = cv2.VideoCapture(input_video)
+        original_width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        original_height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        cap.release()
+        resolution_label.config(text=f"Original Resolution: {original_width}x{original_height}")
 
 # Function to select output video
 def select_output_video():
@@ -110,6 +140,15 @@ def select_output_video():
     output_video = filedialog.asksaveasfilename(title="Save Compressed Video As", defaultextension=".mp4", filetypes=[("MP4 Files", "*.mp4")])
     if output_video:
         output_label.config(text=f"Output: {os.path.basename(output_video)}")
+
+# Function to toggle custom resolution fields
+def toggle_custom_resolution(*args):
+    if resolution_var.get() == "Custom":
+        custom_width_entry.grid(row=6, column=0, padx=10, pady=5)
+        custom_height_entry.grid(row=6, column=1, padx=10, pady=5)
+    else:
+        custom_width_entry.grid_remove()
+        custom_height_entry.grid_remove()
 
 # Create GUI window
 root = tk.Tk()
@@ -142,18 +181,31 @@ threshold_entry = tk.Entry(root)
 threshold_entry.insert(0, "2.0")  # Default threshold
 threshold_entry.grid(row=2, column=1, padx=10, pady=10)
 
+# Resolution selection
+resolution_label = tk.Label(root, text="Original Resolution: Not selected")
+resolution_label.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+
+resolution_var = tk.StringVar(value="720p")  # Default resolution
+resolution_options = ["720p", "480p", "360p", "Custom"]
+resolution_menu = ttk.Combobox(root, textvariable=resolution_var, values=resolution_options, state="readonly")
+resolution_menu.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+resolution_var.trace("w", toggle_custom_resolution)  # Toggle custom resolution fields
+
+# Custom resolution fields (hidden by default)
+custom_width_entry = tk.Entry(root)
+custom_height_entry = tk.Entry(root)
+
 # Progress bar
 progress_bar = ttk.Progressbar(root, orient="horizontal", length=300, mode="determinate", maximum=100)
-progress_bar.grid(row=3, column=0, columnspan=2, padx=10, pady=10)
+progress_bar.grid(row=5, column=0, columnspan=2, padx=10, pady=10)
 
 # Status label
 status_label = tk.Label(root, text="", fg="blue")
-status_label.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
+status_label.grid(row=7, column=0, columnspan=2, padx=10, pady=10)
 
 # Start compression button
 compress_button = tk.Button(root, text="Compress Video", command=start_compression)
-compress_button.grid(row=5, column=0, columnspan=2, padx=10, pady=20)
+compress_button.grid(row=8, column=0, columnspan=2, padx=10, pady=20)
 
 # Run GUI
 root.mainloop()
-
