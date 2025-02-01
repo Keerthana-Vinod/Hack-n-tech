@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduStream - Educational Video Streaming</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1 style="color:rgb(244, 240, 233)">DEEPROOTS</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#contact">Profile</a></li>
+                <li><a href="#videos">Course</a></li>
+                <li><a href="#contact">Quiz</a></li>
+                <li><a href="#contact">Study materials</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="home">
+            <h2 style="color: rgb(150, 2, 125);">Welcome to DEEPROOTS</h2>
+            <p>Your destination for quality educational videos.</p>
+            <div class="video-player">
+                <video id="mainVideo" controls>
+                    <source src="sample-video.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </section>
+        <section id="videos">
+            <h2 style="color: rgb(150, 2, 125); ;">Courses</h2>
+            <div class="video-list">
+                <div class="video-item" onclick="playVideo('sample-video1.mp4')">
+                    <img src="thumbnail1.jpg" alt="Video Thumbnail">
+                    <p>Video Title 1</p>
+                </div>
+                <div class="video-item" onclick="playVideo('sample-video2.mp4')">
+                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                    <p>Video Title 2</p>
+                </div>
+                <!-- Add more video items as needed -->
+            </div>
+        </section>
+        <section id="contact">
+            <h2 style="color:red"> Contact </h2>
+            <p>Email: contact@edustream.com</p>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2025 DEEPROOTS. All rights reserved.</p>
+    </footer>
+    <script src="script.js"></script>
+</body>
+</html>
