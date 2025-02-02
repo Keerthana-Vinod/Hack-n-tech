@@ -6,17 +6,17 @@ Hack-n-tec is a project developed as part of a 30-hour hackathon hosted by Bhara
 
 Team Members
 
-Gokul P
+Gokul P https://github.com/pgokul695
 
-Keerthana Vinod
+Keerthana Vinod https://github.com/Keerthana-Vinod
 
-Abel Jeevan
+Abel Jeevan https://github.com/abeljeevan
 
-C Raniya Nazrine
+C Raniya Nazrine https://github.com/RaniyaNazrine
 
 Project Description
 
-Hack-n-tec is designed to tackle a specific problem statement provided during the hackathon. Our solution integrates technology to provide an efficient and user-friendly experience. The project showcases our skills in software development, problem-solving, and teamwork.
+Hack-n-tec is designed to tackle INABILITY OF TECHNOLOGY TO SERVER VIDEO TO LOW END HARDWARE AND LOW BITRATE NETWORKS provided during the hackathon. Our solution integrates technology to provide an efficient and user-friendly experience. The project showcases our skills in software development, problem-solving, and teamwork. The solution solves the #4th SDG
 
 Features
 
