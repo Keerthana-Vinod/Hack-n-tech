@@ -1,0 +1,58 @@
+<!-- profile.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Profile - Deeproots</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function checkLogin(event) {
+            event.preventDefault();
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username === "faculty" && password === "password123") {
+                document.getElementById("login-form").style.display = "none";
+                document.getElementById("upload-section").style.display = "block";
+            } else {
+                alert("Invalid credentials!");
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>Faculty Profile</h1>
+    </header>
+
+    <main>
+        <!-- Login Form -->
+        <section id="login-form">
+            <h2>Faculty Login</h2>
+            <form onsubmit="checkLogin(event)">
+                <input type="text" id="username" placeholder="Username" required>
+                <input type="password" id="password" placeholder="Password" required>
+                <button type="submit">Login</button>
+            </form>
+        </section>
+
+        <!-- Upload Section (Visible After Login) -->
+        <section id="upload-section" style="display: none;">
+            <h2>Upload Video</h2>
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <label for="course">Course Name:</label>
+                <input type="text" id="course" name="course" required>
+                
+                <input type="file" name="videoFile" accept="video/*" required>
+                <button type="submit">Upload & Compress</button>
+            </form>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 DEEPROOTS. All rights reserved.</p>
+    </footer>
+</body>
+</html>
+

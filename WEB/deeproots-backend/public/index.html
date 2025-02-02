@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deeproots - Educational Video Streaming</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>DEEPROOTS</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li><a href="#videos">Courses</a></li>
+                <li><a href="#quiz">Quiz</a></li>
+                <li><a href="#materials">Study Materials</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="home">
+            <h2>Welcome to DEEPROOTS</h2>
+            <p>Your destination for quality educational videos.</p>
+            <div class="video-player">
+                <video id="mainVideo" controls>
+                    <source src="videos/video-720p.mp4" type="video/mp4" data-quality="720p">
+                    <source src="videos/video-480p.mp4" type="video/mp4" data-quality="480p">
+                    <source src="videos/video-240p.mp4" type="video/mp4" data-quality="240p">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="video-controls">
+                    <label for="qualitySelector">Quality:</label>
+                    <select id="qualitySelector" onchange="changeVideoQuality()">
+                        <option value="720p">720p (High)</option>
+                        <option value="480p">480p (Medium)</option>
+                        <option value="240p">240p (Low)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section id="videos">
+            <h2>Courses</h2>
+            <div class="video-list">
+                <div class="video-item" onclick="playVideo('videos/video-720p.mp4')">
+                    <img src="thumbnail1.jpg" alt="Video Thumbnail">
+                    <p>Video Title 1</p>
+                </div>
+                <div class="video-item" onclick="playVideo('videos/video-480p.mp4')">
+                    <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                    <p>Video Title 2</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 DEEPROOTS. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
+

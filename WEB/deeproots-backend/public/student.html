@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard - Deeproots</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>DEEPROOTS</h1>
+        <nav>
+            <ul>
+                <li><a href="/">Home</a></li>
+                <li><a href="/logout">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Welcome, Student</h2>
+        <div class="video-list">
+            <div class="video-item" onclick="playVideo('videos/video-720p.mp4')">
+                <img src="thumbnail1.jpg" alt="Video Thumbnail">
+                <p>Video Title 1</p>
+            </div>
+            <div class="video-item" onclick="playVideo('videos/video-480p.mp4')">
+                <img src="thumbnail2.jpg" alt="Video Thumbnail">
+                <p>Video Title 2</p>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 DEEPROOTS. All rights reserved.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
